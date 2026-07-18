@@ -1,0 +1,32 @@
+# Gradle build output and local caches
+.gradle/
+build/
+out/
+bin/
+
+# Minecraft/NeoForge development runtime
+run/
+runs/
+logs/
+crash-reports/
+
+# IDE and editor-local files
+.idea/
+.vscode/
+*.iml
+*.ipr
+*.iws
+
+# Local machine configuration
+local.properties
+
+# Operating-system clutter
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Logs and temporary files
+*.log
+*.tmp
+*.bak
+*~

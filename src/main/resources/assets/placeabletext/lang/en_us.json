@@ -1,0 +1,24 @@
+{
+  "item.placeabletext.letter_placer": "Letter Placer",
+  "item.placeabletext.number_placer": "Number Placer",
+  "item.placeabletext.special_placer": "Special Placer",
+  "block.placeabletext.text_anchor": "Placed Character",
+  "tooltip.placeabletext.scroll": "Shift + mouse wheel: select character",
+  "tooltip.placeabletext.place": "Right-click: place",
+  "tooltip.placeabletext.customize": "Shift + Right-click: customize",
+  "gui.placeabletext.title": "Text Style",
+  "gui.placeabletext.selected": "Selected: %s",
+  "gui.placeabletext.size": "Size: %s",
+  "gui.placeabletext.background": "Background: %s",
+  "gui.placeabletext.outline": "Outline: %s",
+  "gui.placeabletext.shadow": "Shadow: %s",
+  "gui.placeabletext.phosphor": "Phosphor: %s",
+  "gui.placeabletext.light": "Emit Light: %s",
+  "gui.placeabletext.rotation": "Rotation: %s°",
+  "gui.placeabletext.save": "Save",
+  "gui.placeabletext.on": "On",
+  "gui.placeabletext.off": "Off",
+  "gui.placeabletext.transparent": "Transparent",
+  "gui.placeabletext.solid": "Solid"
+}
+
