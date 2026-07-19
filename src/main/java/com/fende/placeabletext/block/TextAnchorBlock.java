@@ -74,13 +74,5 @@ public final class TextAnchorBlock extends BaseEntityBlock {
         return InteractionResult.PASS;
     }
 
-    @Override protected BlockState updateShape(BlockState state, Direction direction, BlockState neighborState,
-                                               net.minecraft.world.level.LevelAccessor level, BlockPos pos, BlockPos neighborPos) {
-        Direction face = state.getValue(ATTACHED_FACE);
-        if (direction == face.getOpposite() && !neighborState.isFaceSturdy(level, neighborPos, face)) {
-            return net.minecraft.world.level.block.Blocks.AIR.defaultBlockState();
-        }
-        return state;
-    }
 }
 

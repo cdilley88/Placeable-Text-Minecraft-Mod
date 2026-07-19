@@ -133,12 +133,12 @@ public final class TextStyleScreen extends Screen {
         return Component.translatable("gui.placeabletext.size", switch (size) { case 0 -> "Small"; case 2 -> "Large"; default -> "Medium"; });
     }
     private Component backgroundLabel() {
-        String key = switch (backgroundMode) {
-            case TextStyle.BACKGROUND_SOLID -> "gui.placeabletext.solid";
-            case TextStyle.BACKGROUND_SEMI -> "gui.placeabletext.semi";
-            default -> "gui.placeabletext.none";
+        String label = switch (backgroundMode) {
+            case TextStyle.BACKGROUND_SOLID -> "Solid";
+            case TextStyle.BACKGROUND_SEMI -> "Semi";
+            default -> "None";
         };
-        return Component.translatable("gui.placeabletext.background", Component.translatable(key));
+        return Component.literal("Background: " + label);
     }
     private Component lightLabel() { return toggle("gui.placeabletext.light", emitLight); }
     private Component toggle(String key, boolean value) {

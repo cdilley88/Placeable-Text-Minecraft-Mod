@@ -13,6 +13,8 @@ import net.minecraft.core.Direction;
 public final class TextAnchorRenderer implements BlockEntityRenderer<TextAnchorBlockEntity> {
     private static final String PANEL_TEXT = "        ";
     private static final float FULL_DEPTH_FORWARD_NUDGE = -0.01f;
+    private static final float PANEL_HEIGHT = 1.10f;
+    private static final float FACE_THICKNESS = 0.02f;
     private final Font font;
     public TextAnchorRenderer(BlockEntityRendererProvider.Context context) { font = context.getFont(); }
 
@@ -26,8 +28,23 @@ public final class TextAnchorRenderer implements BlockEntityRenderer<TextAnchorB
         orient(pose, text.surface());
         float forwardNudge = style.depthOffset() < 0.25f ? FULL_DEPTH_FORWARD_NUDGE : 0.0f;
         pose.translate(0, 0, 0.5f - style.depthOffset() - 0.002f + forwardNudge);
+        renderFace(pose, buffers, value, style, packedLight, true);
+        pose.translate(0, 0, -FACE_THICKNESS);
+        pose.mulPose(Axis.YP.rotationDegrees(180f));
+        renderFace(pose, buffers, value, style, packedLight,
+                style.backgroundMode() != TextStyle.BACKGROUND_SOLID);
+        pose.popPose();
+    }
+
+    private void renderFace(PoseStack pose, MultiBufferSource buffers, String value,
+                            TextStyle style, int packedLight, boolean renderGlyph) {
+        pose.pushPose();
         if (style.backgroundMode() != TextStyle.BACKGROUND_NONE) {
             renderPanel(pose, buffers, style, packedLight);
+        }
+        if (!renderGlyph) {
+            pose.popPose();
+            return;
         }
         pose.translate(style.horizontalOffset(), -style.verticalOffset(), 0.002f);
         pose.mulPose(Axis.ZP.rotationDegrees(style.rotation() * 90f));
@@ -53,7 +70,7 @@ public final class TextAnchorRenderer implements BlockEntityRenderer<TextAnchorB
     private void renderPanel(PoseStack pose, MultiBufferSource buffers, TextStyle style, int packedLight) {
         int panelWidth = font.width(PANEL_TEXT);
         float scaleX = 1.02f / (panelWidth + 2.0f);
-        float scaleY = 1.02f / (font.lineHeight + 2.0f);
+        float scaleY = PANEL_HEIGHT / (font.lineHeight + 2.0f);
         int alpha = style.backgroundMode() == TextStyle.BACKGROUND_SOLID ? 0xFF000000 : 0x66000000;
         pose.pushPose();
         pose.scale(-scaleX, -scaleY, 1.0f);
