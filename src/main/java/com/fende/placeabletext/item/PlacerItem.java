@@ -7,9 +7,11 @@ import com.fende.placeabletext.client.ClientAccess;
 import com.fende.placeabletext.registry.ModBlocks;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
+import net.minecraft.util.Mth;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -62,13 +64,21 @@ public final class PlacerItem extends Item {
         BlockPos anchorPos = context.getClickedPos().relative(context.getClickedFace());
         if (!level.getBlockState(anchorPos).canBeReplaced()) return InteractionResult.FAIL;
         TextStyle style = TextStyle.fromItem(stack);
+        Direction clickedFace = context.getClickedFace();
+        if (clickedFace.getAxis() == Direction.Axis.Y && context.getPlayer() != null) {
+            int yawQuarter = Mth.floor(context.getPlayer().getYRot() / 90.0f + 0.5f) & 3;
+            int rotation = clickedFace == Direction.UP
+                    ? yawQuarter
+                    : Math.floorMod(-yawQuarter, 4);
+            style = style.withRotation(rotation);
+        }
         BlockState state = ModBlocks.TEXT_ANCHOR.get().defaultBlockState()
-                .setValue(TextAnchorBlock.ATTACHED_FACE, context.getClickedFace())
+                .setValue(TextAnchorBlock.ATTACHED_FACE, clickedFace)
                 .setValue(TextAnchorBlock.LIGHT, style.emitLight() ? style.lightLevel() : 0);
         if (!level.isClientSide) {
             level.setBlock(anchorPos, state, 3);
             if (level.getBlockEntity(anchorPos) instanceof TextAnchorBlockEntity text) {
-                text.initialize(selected(stack), category, style, context.getClickedFace(),
+                text.initialize(selected(stack), category, style, clickedFace,
                         context.getPlayer() == null ? null : context.getPlayer().getUUID());
             }
         }

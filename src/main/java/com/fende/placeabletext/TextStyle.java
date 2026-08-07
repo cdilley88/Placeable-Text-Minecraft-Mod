@@ -41,6 +41,12 @@ public record TextStyle(int size, int textColor, int backgroundMode, int backgro
         stack.set(DataComponents.CUSTOM_DATA, CustomData.of(root));
     }
 
+    public TextStyle withRotation(int rotation) {
+        return new TextStyle(size, textColor, backgroundMode, backgroundColor,
+                outline, outlineColor, shadow, phosphor, emitLight, lightLevel, rotation,
+                horizontalOffset, verticalOffset, depthOffset);
+    }
+
     public CompoundTag toTag() {
         CompoundTag tag = new CompoundTag();
         tag.putInt("Size", size);
